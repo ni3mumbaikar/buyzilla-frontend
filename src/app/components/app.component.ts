@@ -12,11 +12,13 @@ export class AppComponent {
   title = 'buyzilla';
   products:any;
   constructor(productservice : ProductApiHttpService) { 
-    this.products = productservice.get().subscribe(data => {
+    productservice.get().subscribe(data => {
       console.log(data);
-      
+      this.products = data
     });
     
   }
+
   
 }
+

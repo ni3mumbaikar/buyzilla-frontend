@@ -17,6 +17,7 @@ yarn-error.log
 .classpath
 .c9/
 *.launch
+*.lock
 .settings/
 *.sublime-workspace
 

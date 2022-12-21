@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { timeout } from 'rxjs';
 import { ProductApiHttpService } from '../core/services/api-product.service'
 import { Observable } from 'rxjs';
-import { ProductVo } from '../model/product'
+import { ProductVo, Product } from '../model/product'
 import Swal from 'sweetalert2'
 
 @Component({
@@ -54,6 +54,9 @@ export class AppComponent {
       };
 
     });
+
+
+
   }
 
   reloadProdutcs() {
@@ -66,4 +69,43 @@ export class AppComponent {
     });
 
   }
+
+  mouseEnter(pid: any) {
+    let className = 'delete' + pid as string;
+    const element = <HTMLElement>document.getElementsByClassName(className)[0];
+    element.style.visibility = 'visible';
+  }
+
+  mouseLeave(pid: any) {
+    let className = 'delete' + pid as string;
+    const element = <HTMLElement>document.getElementsByClassName(className)[0];
+    element.style.visibility = 'hidden';
+  }
+
+  deleteImage(product: Product) {
+    Swal.fire({
+      title: 'Delete Product',
+      text: "Are you sure that you want to delete " + product.productName,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ps.delete(product.productID).subscribe(result => {
+          console.log(result);
+
+          Swal.fire(
+            'Deleted!',
+            'Product ' + product.productName + ' has been deleted.',
+            'success'
+          ).then(() => {
+            this.reloadProdutcs();
+          })
+        })
+      }
+    })
+  }
+
 }

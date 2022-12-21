@@ -25,7 +25,8 @@ export class ProductApiHttpService {
     // public put( data: any, options?: any) {
     //     return this.http.put(this.url, data, options);
     // }
-    // public delete( options?: any) {
-    //     return this.http.delete(this.url, options);
-    // }
+
+    public delete(pid: number) {
+        return this.http.delete(this.url + '/' + pid, { body: pid });
+    }
 }

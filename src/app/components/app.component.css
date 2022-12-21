@@ -1,0 +1,9 @@
+.deletebtn {
+    position: absolute;
+    z-index: 3;
+}
+
+.pimg {
+    position: relative;
+    z-index: 2;
+}

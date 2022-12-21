@@ -1,11 +1,21 @@
+import { Supplier } from "./supplier"
+
+// Post or PUT product 
 export interface ProductVo {
     productName: string,
     supplierID: number,
     productImage: string,
     price: number,
     unit: number
+    productID: number
 }
 
-export interface Product extends ProductVo {
+// Get all Products
+export interface Product {
     productID: number
+    productName: string,
+    supplier: Supplier,
+    productImage: string,
+    price: number,
+    unit: number
 }

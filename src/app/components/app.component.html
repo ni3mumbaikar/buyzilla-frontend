@@ -13,13 +13,17 @@
             
         </div> -->
   <div class="bg-white">
-    <div class="mx-auto max-w-2xl py-8 px-4 sm:py-8 lg:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
+    <div class=" mx-auto max-w-2xl py-8 px-4 sm:py-8 lg:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
       <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         <a href="#" *ngFor="let product of products; let index = index" class="group">
           <div (mouseenter)="mouseEnter(product.productID)" (mouseleave)="mouseLeave(product.productID)"
             class="pimg aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
-            <img [style.visibility]="'hidden'" class=" delete{{product.productID}} deletebtn w-8 py-1 px-1"
-              src="../../assets/images/delete.svg" (click)="deleteImage(product)" />
+            <img [style.background]="'black'" [style.visibility]="'hidden'"
+              class=" delete{{product.productID}} deletebtn w-8 py-1 px-1" src="../../assets/images/delete-white.svg"
+              (click)="deleteImage(product)" />
+            <img [style.background]="'black'" [style.visibility]="'hidden'"
+              class=" edit{{product.productID}} editbtn w-8 py-1 px-1" src="../../assets/images/edit.svg"
+              (click)="editImage(product)" />
             <img src={{product.productImage}} alt="Delete product {{product.productName}}"
               class="aspect-w-1 aspect-h-1 object-cover object-center group-hover:opacity-75">
           </div>
@@ -29,7 +33,7 @@
         </a>
         <div class="group">
           <div type="button" data-modal-toggle="product-modal"
-            class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+            class="modal-opener aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
             <img src="../../assets/images/plus.png" class="py-32 px-32">
           </div>
         </div>
@@ -40,12 +44,12 @@
 
 
   <!-- Main modal -->
-  <div id="product-modal" aria-hidden="true"
+  <div id="product-modal" data-modal-backdrop="static" aria-hidden="true"
     class="fixed top-0 left-0 right-0 z-50 hidden w-full justify-center items-center-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
     <div class="relative w-full h-full max-w-md md:h-auto">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <button type="button" id="closeproductmodal"
+        <button type="button" id="closeproductmodal" (click)="resetForm()"
           class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
           data-modal-toggle="product-modal">
           <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -68,7 +72,7 @@
             </div>
             <div>
               <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-              <input type="text" name="price" id="price" placeholder="₹••••"
+              <input type="number" name="price" id="price" placeholder="₹••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required>
             </div>
@@ -81,7 +85,7 @@
             <div>
               <label for="supplier" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Supplier
                 ID</label>
-              <input type="text" name="supplier" id="supplier" placeholder="••••"
+              <input type="number" name="supplier" id="supplier" placeholder="••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 required>
             </div>
@@ -93,7 +97,7 @@
                 required>
             </div>
             <button type="submit"
-              class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              class="submitbtn-modal w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               Add New Product
             </button>
 

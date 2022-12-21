@@ -3,6 +3,12 @@
     z-index: 3;
 }
 
+.editbtn {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+}
+
 .pimg {
     position: relative;
     z-index: 2;

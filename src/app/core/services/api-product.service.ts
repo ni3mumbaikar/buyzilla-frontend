@@ -13,7 +13,7 @@ import { Subject, Observable, tap } from 'rxjs';
 )
 export class ProductApiHttpService {
     url = Constants.PRODUCT_API_ENDPOINT;
-    products: [Product];
+    products: [Product] | undefined;
     product_subject = new Subject<[Product]>();
     constructor(
         // Angular Modules 

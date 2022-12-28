@@ -1,7 +1,4 @@
 <div>
-    <!-- <div *ngFor="let a of products; let index = index" class="flex font-sans">
-              
-          </div> -->
     <div class="bg-white">
         <div class=" mx-auto max-w-2xl py-8 px-4 sm:py-8 lg:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
             <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
@@ -17,15 +14,27 @@
                         <img src={{product.productImage}} alt="Delete product {{product.productName}}"
                             class="aspect-w-1 aspect-h-1 object-cover object-center group-hover:opacity-75">
                     </div>
-                    <h3 class="mt-4 text-sm text-gray-700">{{product.productName}}</h3>
-                    <p class="mt-1 text-lg font-medium text-gray-900">₹{{product.price}}</p>
+                    <div>
+                        <div [ngStyle]="{'flex-direction':'row'}" class="flex h-fit items-center">
+                            <div class="w-4/5">
+                                <h3 class="mt-4 text-sm text-gray-700">{{product.productName}}</h3>
+                                <div class="mt-1 w-auto text-lg font-medium text-gray-900">₹{{product.price}}</div>
+                            </div>
+                            <img *ngIf="productInCart(product); else cartOut" (click)="removeFromCart(product)"
+                                src="../../../assets/images/remove-from-cart.svg" class="ml-auto w-8 h-8 mr-2" />
+                            <ng-template #cartOut><img (click)="addToCart(product)"
+                                    src="../../../assets/images/add-to-cart.svg"
+                                    class="ml-auto w-8 h-8 mr-2" /></ng-template>
 
+                        </div>
+                    </div>
                 </a>
                 <div class="group">
                     <div type="button" (click)="resetForm()"
                         class="modal-opener aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
                         <img src="../../assets/images/plus.png" class="py-32 px-32">
                     </div>
+                    <h3 class="mt-4 text-sm text-gray-700">Add New Product</h3>
                 </div>
             </div>
         </div>
@@ -56,7 +65,7 @@
                                 <label for="name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
                                     name</label>
-                                <input type="text" name="name" id="name" [(ngModel)]="tempProduct.productName"
+                                <input type="text" name="name" id="name" [(ngModel)]="tempProduct!.productName"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                     placeholder="••••••" required>
                             </div>
@@ -64,7 +73,7 @@
                                 <label for="price"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
                                 <input type="number" name="price" id="price" placeholder="₹••••"
-                                    [(ngModel)]="tempProduct.price"
+                                    [(ngModel)]="tempProduct!.price"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                     required>
                             </div>
@@ -72,7 +81,7 @@
                                 <label for="unit"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Units</label>
                                 <input type="number" name="unit" id="unit" placeholder="••••"
-                                    [(ngModel)]="tempProduct.unit"
+                                    [(ngModel)]="tempProduct!.unit"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                     required>
                             </div>
@@ -81,7 +90,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Supplier
                                     ID</label>
                                 <input type="number" name="supplier" id="supplier" placeholder="••••"
-                                    [(ngModel)]="tempProduct.supplier.supplierID"
+                                    [(ngModel)]="tempProduct!.supplier.supplierID"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                     required>
                             </div>
@@ -90,11 +99,11 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product image
                                     link</label>
                                 <input type="text" name="primage" id="primage" placeholder="https://••••"
-                                    [(ngModel)]="tempProduct.productImage"
+                                    [(ngModel)]="tempProduct!.productImage"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                     required>
                             </div>
-                            <button type="submit"
+                            <button type="submit" #submitbtnmodal
                                 class="submitbtn-modal w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Add New Product
                             </button>

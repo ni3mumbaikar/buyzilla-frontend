@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ProductVo, Product } from '../../model/product'
 import Swal from 'sweetalert2'
 import { FormGroup } from '@angular/forms';
+import { CartService } from 'src/app/core/services/cart.service';
 
 
 @Component({
@@ -20,11 +21,16 @@ export class ProductsComponentComponent {
   tempProduct: | Product;
   @ViewChild('productform', { static: true }) form!: ElementRef;
   @ViewChild('productmodal', { static: true }) modal!: ElementRef;
+  @ViewChild('submitbtnmodal', { static: true }) submitmodal!: ElementRef;
   formElement!: HTMLFormElement
   SwalToast: any;
+  cartService: CartService;
 
 
-  constructor(productservice: ProductApiHttpService) {
+  constructor(productservice: ProductApiHttpService, cartService: CartService) {
+
+    this.cartService = cartService;
+    this.ps = productservice;
 
     this.SwalToast = Swal.mixin({
       toast: true,
@@ -53,17 +59,11 @@ export class ProductsComponentComponent {
       },
       unit: 0
     };
-    this.ps = productservice;
     this.reloadProdutcs();
-
-
 
     productservice.get().subscribe(data => {
       console.log(data);
       this.products = data
-
-
-
     });
 
   }
@@ -72,7 +72,7 @@ export class ProductsComponentComponent {
     this.formElement = this.form.nativeElement as HTMLFormElement
     this.formElement.onsubmit = () => {
 
-      let modalBtn = document.getElementsByClassName('submitbtn-modal')[0]! as HTMLButtonElement;
+      let modalBtn = this.modal.nativeElement as HTMLElement;
       if (modalBtn.innerText.startsWith("Add")) {
         this.addNewProduct();
       }
@@ -140,6 +140,7 @@ export class ProductsComponentComponent {
 
   closemodal() {
     (this.modal.nativeElement as HTMLElement).style.display = 'none';
+    this.reloadlist(); //to discard un-updated values
   }
 
   openmodal() {
@@ -147,8 +148,7 @@ export class ProductsComponentComponent {
   }
 
   setmodalbtntext(str: any) {
-    let modalBtn = document.getElementsByClassName('submitbtn-modal')[0]! as HTMLButtonElement;
-    modalBtn.innerText = str;
+    (this.submitmodal.nativeElement as HTMLElement).innerText = str;
   }
 
   // Setup project subject subscriber to change local list automatically
@@ -187,7 +187,7 @@ export class ProductsComponentComponent {
     this.tempProduct = product;
     this.openmodal();
     this.setmodalbtntext("Update Product")
-    this.tempPrID = product.productID;
+    this.tempPrID = product.productID!;
   }
 
   deleteImage(product: Product) {
@@ -201,7 +201,7 @@ export class ProductsComponentComponent {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.ps.delete(product.productID).subscribe(result => {
+        this.ps.delete(product.productID!).subscribe(result => {
           if (result['ok']) {
 
             this.SwalToast.fire({
@@ -214,25 +214,37 @@ export class ProductsComponentComponent {
     })
   }
 
+  productInCart(product: Product) {
+    return this.cartService.isProductInCart(product);
+    // return false;
+  }
 
+  removeFromCart(product: Product) {
+    return this.cartService.removeProduct(product);
+  }
+
+  addToCart(product: Product) {
+    console.log('add method');
+
+    this.cartService.addProduct(product)
+  }
 
   resetForm() {
     this.tempProduct = {
-      price: 0,
-      productID: 0,
+      price: undefined,
+      productID: undefined,
       productImage: "",
       productName: "",
       supplier: {
         address: "",
         city: "",
-        postalCode: 0,
-        supplierID: 0,
+        postalCode: undefined,
+        supplierID: undefined,
         supplierName: ""
       },
-      unit: 0
+      unit: undefined
     };
     this.setmodalbtntext("Add New Product")
-    this.reloadlist(); //to discard un-updated values
     this.openmodal();
   }
 

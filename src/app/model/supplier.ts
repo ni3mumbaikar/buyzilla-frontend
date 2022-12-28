@@ -1,7 +1,7 @@
 export interface Supplier {
-    supplierID: number,
+    supplierID: number | undefined,
     address: string,
     city: string,
-    postalCode: number,
+    postalCode: number | undefined,
     supplierName: string
 }

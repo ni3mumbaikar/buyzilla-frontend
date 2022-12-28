@@ -12,10 +12,10 @@ export interface ProductVo {
 
 // Get all Products
 export interface Product {
-    productID: number
+    productID: number | undefined
     productName: string,
     supplier: Supplier,
     productImage: string,
-    price: number,
-    unit: number
+    price: number | undefined,
+    unit: number | undefined
 }

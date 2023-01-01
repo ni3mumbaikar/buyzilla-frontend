@@ -11,7 +11,7 @@ export class CartService {
   cartModifiedSubject: Subject<Product[]> = new Subject();
 
   constructor() {
-    if (localStorage.getItem("cartProducts") != 'undefined') {
+    if (localStorage.getItem("cartProducts") != undefined) {
       this.cartProducts = JSON.parse(localStorage.getItem("cartProducts")!)
     }
   }
@@ -29,7 +29,7 @@ export class CartService {
   }
 
   isProductInCart(product: Product) {
-    if (this.cartProducts.filter(p => p.productID === product.productID).length >= 1) {
+    if (this.cartProducts && this.cartProducts.filter(p => p.productID === product.productID).length >= 1) {
       return true;
     }
     return false;
@@ -38,7 +38,13 @@ export class CartService {
   updateLocalStorage() {
     localStorage.setItem("cartProducts", JSON.stringify(this.cartProducts));
     console.log(this.cartProducts);
-
   }
+
+  clearCart() {
+    this.cartProducts = []
+    localStorage.setItem("cartProducts", JSON.stringify(this.cartProducts))
+    this.cartModifiedSubject.next(this.cartProducts);
+  }
+
 
 }

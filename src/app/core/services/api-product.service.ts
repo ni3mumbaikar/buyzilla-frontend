@@ -29,6 +29,8 @@ export class ProductApiHttpService {
 
     public post(data: [ProductVo]): Observable<HttpResponse<any>> {
         return this.http.post(this.url, data, { observe: 'response' }).pipe(tap(response => {
+            console.log(data);
+
             if (response.ok) {
                 this.get().subscribe()
             }

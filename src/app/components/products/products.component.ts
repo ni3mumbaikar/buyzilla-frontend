@@ -6,7 +6,7 @@ import { ProductVo, Product } from '../../model/product'
 import Swal from 'sweetalert2'
 import { FormGroup } from '@angular/forms';
 import { CartService } from 'src/app/core/services/cart.service';
-
+import { defaultMixin } from 'src/app/config/default-mixin';
 
 @Component({
   selector: 'app-products-component',
@@ -23,7 +23,6 @@ export class ProductsComponentComponent {
   @ViewChild('productmodal', { static: true }) modal!: ElementRef;
   @ViewChild('submitbtnmodal', { static: true }) submitmodal!: ElementRef;
   formElement!: HTMLFormElement
-  SwalToast: any;
   cartService: CartService;
 
 
@@ -31,19 +30,6 @@ export class ProductsComponentComponent {
 
     this.cartService = cartService;
     this.ps = productservice;
-
-    this.SwalToast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2500,
-
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
 
     this.tempProduct = {
       price: 0,
@@ -71,8 +57,9 @@ export class ProductsComponentComponent {
   ngAfterViewInit() {
     this.formElement = this.form.nativeElement as HTMLFormElement
     this.formElement.onsubmit = () => {
+      console.log('onsubmit');
 
-      let modalBtn = this.modal.nativeElement as HTMLElement;
+      let modalBtn = this.submitmodal.nativeElement as HTMLElement;
       if (modalBtn.innerText.startsWith("Add")) {
         this.addNewProduct();
       }
@@ -100,7 +87,7 @@ export class ProductsComponentComponent {
           this.closemodal();
         }, 200)
 
-        this.SwalToast.fire({
+        defaultMixin.fire({
           icon: 'success',
           title: 'Product ' + tempProduct.productName + ' has been updated.'
         })
@@ -128,7 +115,7 @@ export class ProductsComponentComponent {
         this.closemodal();
       }, 200)
 
-      this.SwalToast.fire({
+      defaultMixin.fire({
         icon: 'success',
         title: 'Product ' + tempProduct.productName + ' has been added.'
       })
@@ -204,7 +191,7 @@ export class ProductsComponentComponent {
         this.ps.delete(product.productID!).subscribe(result => {
           if (result['ok']) {
 
-            this.SwalToast.fire({
+            defaultMixin.fire({
               icon: 'success',
               title: 'Product ' + product.productName + ' has been deleted.'
             })

@@ -19,11 +19,15 @@ export class ProductApiHttpService {
         // Angular Modules 
         private http: HttpClient
     ) {
+        this.get().subscribe()
     }
 
     public get(): Observable<[Product]> {
         return this.http.get<[Product]>(this.url).pipe(
-            tap(data => this.product_subject.next(data))
+            tap(data => {
+                this.products = data;
+                this.product_subject.next(data)
+            })
         );
     }
 
@@ -52,4 +56,5 @@ export class ProductApiHttpService {
             }
         }));
     }
+
 }

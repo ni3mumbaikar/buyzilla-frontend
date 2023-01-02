@@ -9,7 +9,7 @@
 }
 
 .cart-counter {
-    background-color: brown;
+    background-color: #9F1239;
     position: absolute;
     border-radius: 50%;
     z-index: 3;
@@ -24,4 +24,9 @@
 .count {
     z-index: 4;
     color: aliceblue;
+}
+
+.active {
+    color: #1D4ED8;
+    fill: #1D4ED8;
 }

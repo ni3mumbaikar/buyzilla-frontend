@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, ViewChildren } from '@angular/core';
 import { CartService } from 'src/app/core/services/cart.service';
-import { Order, OrderDetails } from 'src/app/model/order';
+import { OrderVo, OrderDetailsVo } from 'src/app/model/order';
 import { Product } from 'src/app/model/product';
 import { defaultMixin } from 'src/app/config/default-mixin';
 import { ApiShippersService } from 'src/app/core/services/api-shippers.service';
@@ -13,7 +13,7 @@ import { ApiOrdersService } from 'src/app/core/services/api-orders.service';
 })
 export class CartComponent {
   cartProductList: Product[] = [];
-  cartOrderDetails: OrderDetails[] = [];
+  cartOrderDetails: OrderDetailsVo[] = [];
   cid: number | undefined;
   @ViewChild('cartModal') modalRef!: ElementRef;
   @ViewChild('cartForm') form!: ElementRef;
@@ -48,7 +48,7 @@ export class CartComponent {
     this.formElement.onsubmit = async () => {
       const data = new FormData(this.formElement);
       let cid: number = Number(data.get('customerID'));
-      let order: Order = {
+      let order: OrderVo = {
         customerID: cid,
         date: new Date().toISOString().split('T')[0],
         shipperID: await this.shipperService.getShipperID(),
@@ -60,7 +60,7 @@ export class CartComponent {
     }
   }
 
-  placeOrder(order: Order) {
+  placeOrder(order: OrderVo) {
     this.orderService.post(order).subscribe(result => {
       if (result['ok']) {
 

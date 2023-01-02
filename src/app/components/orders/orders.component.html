@@ -1,1 +1,50 @@
-<p>orders works!</p>
+<div class="overflow-x-auto relative">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="py-3 px-6">
+                    Order id
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Customer
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Date
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Products
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Shipper
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Price
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders"
+                class="text-gray-600 hover:text-gray-800 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="py-4 px-6">
+                    {{order.orderID}}
+                </td>
+                <td class="py-4 px-6">
+                    {{order.customer.customerName}}
+                </td>
+                <td class="py-4 px-6">
+                    {{order.date}}
+                </td>
+                <td class="py-4 px-6">
+                    <ul *ngFor="let o of order.orderDetails">{{o.product.productName}} X {{o.quantity}}
+                    </ul>
+                </td>
+                <td class="py-4 px-6">
+                    {{order.shipper.shipperName}}
+                </td>
+                <td class="py-4 px-6">
+                    ₹{{getPrice(order.orderDetails)}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

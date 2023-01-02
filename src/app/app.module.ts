@@ -8,13 +8,17 @@ import { FormsModule } from '@angular/forms';
 import { ProductsComponentComponent } from './components/products/products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { CustomersComponent } from './components/customers/customers.component';
+import { ShippersComponent } from './components/shippers/shippers.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductsComponentComponent,
     CartComponent,
-    OrdersComponent
+    OrdersComponent,
+    CustomersComponent,
+    ShippersComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Order } from 'src/app/model/order';
+import { Order, OrderVo } from 'src/app/model/order';
 import { Observable } from 'rxjs'
 import { Constants } from 'src/app/config/constants';
 
@@ -13,8 +13,12 @@ export class ApiOrdersService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public post(data: Order): Observable<HttpResponse<any>> {
+  public post(data: OrderVo): Observable<HttpResponse<any>> {
     return this.httpClient.post(this.url, data, { observe: 'response' })
+  }
+
+  public get(): Observable<[Order]> {
+    return this.httpClient.get<[Order]>(this.url)
   }
 
 }

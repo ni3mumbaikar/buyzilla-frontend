@@ -142,12 +142,15 @@ export class ProductsComponentComponent {
   reloadProdutcs() {
     this.ps.product_subject.subscribe(list => {
       this.products = list
+      this.ps.products = list;
+
     });
   }
 
   reloadlist() {
     this.ps.get().subscribe(list => {
       this.products = list;
+      this.ps.products = list;
     })
   }
 

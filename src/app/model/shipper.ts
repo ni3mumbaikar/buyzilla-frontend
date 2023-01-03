@@ -1,5 +1,5 @@
 export interface Shipper {
-    shipperID: number,
-    phone: number,
+    shipperID: number | undefined,
+    phone: number | undefined,
     shipperName: string
 }

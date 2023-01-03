@@ -18,12 +18,16 @@ export class ApiShippersService {
     this.get().subscribe()
   }
 
+  delete(sid: number) {
+    return this.httpClient.delete(this.base_url + '/' + sid, { observe: 'response' })
+  }
+
   getShipperID(): Promise<number> {
     return new Promise<number>((resolve, reject) => {
       this.getShippers().subscribe(res => {
         console.log(res);
         if (res !== undefined) {
-          resolve(res[Math.floor(Math.random() * res.length)].shipperID) //get random element from the array
+          resolve(res[Math.floor(Math.random() * res.length)].shipperID!) //get random element from the array
         } else {
           reject(-1)
         }

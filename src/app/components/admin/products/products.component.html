@@ -20,11 +20,6 @@
                                 <h3 class="mt-4 text-sm text-gray-700">{{product.productName}}</h3>
                                 <div class="mt-1 w-auto text-lg font-medium text-gray-900">₹{{product.price}}</div>
                             </div>
-                            <img *ngIf="productInCart(product); else cartOut" (click)="removeFromCart(product)"
-                                src="../../../assets/images/remove-from-cart.svg" class="ml-auto w-8 h-8 mr-2" />
-                            <ng-template #cartOut><img (click)="addToCart(product)"
-                                    src="../../../assets/images/add-to-cart.svg"
-                                    class="ml-auto w-8 h-8 mr-2" /></ng-template>
 
                         </div>
                     </div>

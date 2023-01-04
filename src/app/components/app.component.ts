@@ -14,31 +14,11 @@ import { CartService } from '../core/services/cart.service';
 })
 export class AppComponent {
   title = 'buyzilla';
-  isCartEmpty: boolean = true;
-  len: number = 0;
-  cartService: CartService;
+
 
   constructor(cartService: CartService) {
-    this.cartService = cartService;
-    this.setCartSubscriber();
-
+    // this.setCartSubscriber();
   }
 
-  setCartSubscriber() {
-
-    if (this.cartService.cartProducts.length >= 1) {
-      this.isCartEmpty = false;
-      this.len = this.cartService.cartProducts.length;
-    }
-
-    this.cartService.cartModifiedSubject.subscribe(products => {
-      if (products.length >= 1) {
-        this.isCartEmpty = false;
-        this.len = products.length;
-      } else {
-        this.isCartEmpty = true;
-      }
-    })
-  }
 
 }

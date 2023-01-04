@@ -1,0 +1,31 @@
+<div>
+    <div class="bg-gray-50">
+        <div class=" mx-auto max-w-2xl py-8 px-4 sm:py-8 lg:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                <a *ngFor="let product of products; let index = index" class="group">
+                    <div
+                        class="pimg aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                        <img src={{product.productImage}} alt="Product {{product.productName}}"
+                            class="aspect-w-1 aspect-h-1 object-cover object-center group-hover:opacity-75">
+                    </div>
+                    <div>
+                        <div [ngStyle]="{'flex-direction':'row'}" class="flex h-fit items-center">
+                            <div class="w-4/5">
+                                <h3 class="mt-4 text-sm text-gray-700">{{product.productName}}</h3>
+                                <div class="mt-1 w-auto text-lg font-medium text-gray-900">₹{{product.price}}</div>
+                            </div>
+                            <img *ngIf="productInCart(product); else cartOut" (click)="removeFromCart(product)"
+                                src="../../../assets/images/remove-from-cart.svg" class="ml-auto w-8 h-8 mr-2" />
+                            <ng-template #cartOut><img (click)="addToCart(product)"
+                                    src="../../../assets/images/add-to-cart.svg" class="ml-auto w-8 h-8 mr-2" />
+                            </ng-template>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+</div>

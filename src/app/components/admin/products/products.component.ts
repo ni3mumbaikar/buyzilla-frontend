@@ -1,19 +1,20 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { timeout } from 'rxjs';
-import { ProductApiHttpService } from '../../core/services/api-product.service'
+import { ProductApiHttpService } from '../../../core/services/api-product.service'
 import { Observable } from 'rxjs';
-import { ProductVo, Product } from '../../model/product'
+import { ProductVo, Product } from '../../../model/product'
 import Swal from 'sweetalert2'
 import { FormGroup } from '@angular/forms';
 import { CartService } from 'src/app/core/services/cart.service';
 import { defaultMixin } from 'src/app/config/default-mixin';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-products-component',
+  selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  styleUrls: ['./products.component.css'],
 })
-export class ProductsComponentComponent {
+export class ProductsComponent {
   title = 'buyzilla';
   products: [Product] | undefined;
   ps: ProductApiHttpService;
@@ -173,7 +174,6 @@ export class ProductsComponentComponent {
   }
 
   editImage(product: Product) {
-
     this.tempProduct = product;
     this.openmodal();
     this.setmodalbtntext("Update Product")
@@ -204,21 +204,6 @@ export class ProductsComponentComponent {
     })
   }
 
-  productInCart(product: Product) {
-    return this.cartService.isProductInCart(product);
-    // return false;
-  }
-
-  removeFromCart(product: Product) {
-    return this.cartService.removeProduct(product);
-  }
-
-  addToCart(product: Product) {
-    console.log('add method');
-
-    this.cartService.addProduct(product)
-  }
-
   resetForm() {
     this.tempProduct = {
       price: undefined,
@@ -239,3 +224,4 @@ export class ProductsComponentComponent {
   }
 
 }
+

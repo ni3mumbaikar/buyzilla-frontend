@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.deletebtn {
+    position: absolute;
+    z-index: 3;
+}
+
+.editbtn {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+}
+
+.pimg {
+    position: relative;
+    z-index: 2;
+}
+
+.cartbtn {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    margin: 0, auto;
+    margin-left: 50%;
+    margin-right: 2rem
+}

@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CartComponent } from './components/cart/cart.component';
-import { CustomersComponent } from './components/customers/customers.component';
-import { OrdersComponent } from './components/orders/orders.component';
-import { ProductsComponentComponent } from './components/products/products.component';
-import { ShippersComponent } from './components/shippers/shippers.component';
+import { CartComponent } from './components/user/cart/cart.component';
+import { CustomersComponent } from './components/admin/customers/customers.component';
+import { OrdersComponent } from './components/admin/orders/orders.component';
+import { ProductsComponentComponent } from './components/user/products/products.component';
+import { ShippersComponent } from './components/admin/shippers/shippers.component';
+import { UserComponent } from './components/user/user/user.component';
+import { AdminComponent } from './components/admin/admin/admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
-  { path: 'products', component: ProductsComponentComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'customers', component: CustomersComponent },
-  { path: 'orders', component: OrdersComponent },
-  { path: 'shippers', component: ShippersComponent }
+  { path: 'products', component: UserComponent },
+  { path: 'cart', component: UserComponent, data: { component: CartComponent } },
+  { path: 'customers', component: AdminComponent, data: { component: CustomersComponent } },
+  { path: 'allorders', component: AdminComponent, data: { component: OrdersComponent } },
+  { path: 'shippers', component: AdminComponent, data: { component: ShippersComponent } },
+  { path: 'admin', component: AdminComponent }
 ];
 
 @NgModule({

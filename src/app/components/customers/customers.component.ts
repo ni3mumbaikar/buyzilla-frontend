@@ -36,6 +36,14 @@ export class CustomersComponent {
   }
 
   addNewCustomer(){
+    this.tempCustomer = {
+      address:"",
+      city:"",
+      country:"",
+      customerID:0,
+      customerName:"",
+      postalCode:undefined
+    }
     this.openmodal(false);
   }
 

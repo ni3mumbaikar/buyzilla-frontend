@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { Shipper } from 'src/app/model/shipper';
 import { Constants } from '../../config/constants';
 
@@ -9,13 +9,33 @@ import { Constants } from '../../config/constants';
 })
 export class ApiShippersService {
 
+
+
   base_url = Constants.SHIPPER_API_ENDPOINT;
   shippers: Shipper[] = [];
+  shippersModified = new Subject<Shipper[]>;
 
 
+  put(shippper: Shipper) {
+    return this.httpClient.put(this.base_url, shippper, { observe: 'response', responseType:'text' }).pipe(tap(response => {
+      if (response.ok) {
+        this.get().subscribe()
+      }
+    }));
+  }
+
+  post(shippper: Shipper) {
+    return this.httpClient.post(this.base_url, shippper, { observe: 'response' }).pipe(tap(response => {
+      if (response.ok) {
+        this.get().subscribe()
+      }
+    }));
+  }
 
   constructor(private httpClient: HttpClient) {
-    this.get().subscribe()
+    this.get().subscribe(list => {
+      this.shippers = list;
+    })
   }
 
   delete(sid: number) {
@@ -44,7 +64,7 @@ export class ApiShippersService {
     return this.httpClient.get<[Shipper]>(this.base_url).pipe(
       tap(data => {
         this.shippers = data;
-        // this.product_subject.next(data)
+        this.shippersModified.next(this.shippers)
       })
     );
   }

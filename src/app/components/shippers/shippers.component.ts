@@ -77,7 +77,6 @@ export class ShippersComponent {
     this.formElement = this.form.nativeElement as HTMLFormElement;
     this.formElement.onsubmit = () => {
       console.log('onsubmit');
-      let modalBtn = this.btn.nativeElement as HTMLElement;
       if (!edit) {
         shipper = this.shipper
         this.shipperService.post(shipper!).subscribe(res=>{

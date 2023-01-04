@@ -182,7 +182,7 @@ export class ProductsComponentComponent {
 
   deleteImage(product: Product) {
     Swal.fire({
-      title: 'Delete Product',
+      title: 'Remove Product',
       text: "Are you sure that you want to delete " + product.productName,
       icon: 'question',
       showCancelButton: true,
@@ -196,7 +196,7 @@ export class ProductsComponentComponent {
 
             defaultMixin.fire({
               icon: 'success',
-              title: 'Product ' + product.productName + ' has been deleted.'
+              title: 'Product ' + product.productName + ' has been removed.'
             })
           }
         })

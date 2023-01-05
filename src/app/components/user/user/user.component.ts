@@ -12,6 +12,7 @@ export class UserComponent {
   isCartEmpty: boolean = true;
   len: number = 0;
   public activeTab = ProductsComponentComponent;
+  profile:string = 'Login';
 
   constructor(private route: ActivatedRoute, private cartService: CartService) {
     this.setCartSubscriber();

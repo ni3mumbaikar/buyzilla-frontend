@@ -21,4 +21,8 @@ export class ApiOrdersService {
     return this.httpClient.get<[Order]>(this.url)
   }
 
+  public getByCustomerID(cid:number):Observable<[Order]>{
+    return this.httpClient.get<[Order]>(this.url+'/'+cid);
+  }
+
 }

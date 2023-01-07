@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, tap, throwError } from 'rxjs';
 import { Constants } from 'src/app/config/constants';
 import { Customer } from 'src/app/model/customer';
+import { SHA3 } from 'sha3';
 
 @Injectable({
   providedIn: 'root'
@@ -13,30 +14,23 @@ export class ApiAuthService {
   adminurl: string = Constants.ADMIN_AUTH_API_ENDPOINT;
 
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) { }
 
   verifyUser(user: Customer) {
-    return this.http.post(this.url, user, { observe: 'response' }).pipe(tap(res => {
-      if (res.ok) {
-
-      }
-    }))
+    const hash: SHA3 = new SHA3(256);
+    hash.update(user.password!)
+    user.password = String(hash.digest("hex"));
+    return this.http.post(this.url, user, { observe: 'response' });
   }
 
   verifyAdmin(user: Customer) {
-    console.log(user);
-
+    const hash: SHA3 = new SHA3(256);
     let admin = {
       email: user.email,
       password: user.password
     }
-    return this.http.post(this.adminurl, admin, { observe: 'response' }).pipe(tap(res => {
-      if (res.ok) {
-
-      }
-    }))
+    admin.password = String(hash.update(admin.password!).digest("hex"));
+    return this.http.post(this.adminurl, admin, { observe: 'response' });
   }
 
 }

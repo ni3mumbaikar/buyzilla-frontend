@@ -1,6 +1,7 @@
 <div class="w-full px-6 pt-4 pb-4 text-xl bg-gray-50 flex items-center flex-row border-dashed border-2">
     <h4>Customers</h4>
-    <button (click)="addNewCustomer()" class="text-white bg-blue-600 hover:bg-blue-800 flex items-center rounded-md text-sm px-3 py-2 ml-auto">
+    <button (click)="addNewCustomer()"
+        class="text-white bg-blue-600 hover:bg-blue-800 flex items-center rounded-md text-sm px-3 py-2 ml-auto">
         <span class="mr-2  text-2xl">+</span>
         Register customer
     </button>
@@ -15,6 +16,9 @@
                 </th>
                 <th scope="col" class="py-3 px-6">
                     Name
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Email
                 </th>
                 <th scope="col" class="py-3 px-6">
                     Address
@@ -43,6 +47,9 @@
                     {{customer.customerName}}
                 </td>
                 <td class="py-4 px-6">
+                    {{customer.email}}
+                </td>
+                <td class="py-4 px-6">
                     {{customer.address}}
                 </td>
                 <td class="py-4 px-6">
@@ -56,14 +63,16 @@
                 </td>
                 <td class="py-4 px-6">
                     <div class="flex flex-row gap-x-2">
-                        <div (click)="editCustomer(customer)" class="h-10 w-10 flex justify-center items-center rounded-full bg-blue-600">
+                        <div (click)="editCustomer(customer)"
+                            class="h-10 w-10 flex justify-center items-center rounded-full bg-blue-600">
                             <svg class="h-8 w-8 p-1 fill-gray-200 hover:fill-white" viewBox=" 0 0 50 50"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M9 39h2.2l22.15-22.15-2.2-2.2L9 36.8Zm30.7-24.3-6.4-6.4 2.1-2.1q.85-.85 2.1-.85t2.1.85l2.2 2.2q.85.85.85 2.1t-.85 2.1Zm-2.1 2.1L12.4 42H6v-6.4l25.2-25.2Zm-5.35-1.05-1.1-1.1 2.2 2.2Z" />
                             </svg>
                         </div>
-                        <div (click)="deleteCustomer(customer)" class="h-10 w-10 flex justify-center items-center rounded-full bg-blue-600">
+                        <div (click)="deleteCustomer(customer)"
+                            class="h-10 w-10 flex justify-center items-center rounded-full bg-blue-600">
                             <svg class="h-8 w-8 p-1 fill-gray-200 hover:fill-white" viewBox="0 0 50 50"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -106,6 +115,13 @@
                                 placeholder="••••••" required>
                         </div>
                         <div>
+                            <label for="email"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                            <input type="text" name="email" id="email" [(ngModel)]="tempCustomer!.customerName"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                placeholder="••••••" required>
+                        </div>
+                        <div>
                             <label for="address"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
                             <input type="text" name="address" id="address" placeholder="••••"
@@ -123,14 +139,16 @@
                         <div>
                             <label for="country"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
-                            <input type="text" name="country" id="country" placeholder="••••" [(ngModel)]="tempCustomer!.country"
+                            <input type="text" name="country" id="country" placeholder="••••"
+                                [(ngModel)]="tempCustomer!.country"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                 required>
                         </div>
                         <div>
                             <label for="postalCode"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Postal Code</label>
-                            <input type="text" name="postalCode" id="postalCode" placeholder="••••" [(ngModel)]="tempCustomer!.postalCode"
+                            <input type="text" name="postalCode" id="postalCode" placeholder="••••"
+                                [(ngModel)]="tempCustomer!.postalCode"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                 required>
                         </div>

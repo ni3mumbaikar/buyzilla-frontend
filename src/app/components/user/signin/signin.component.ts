@@ -21,7 +21,7 @@ export class SigninComponent {
   @ViewChild('signUpForm', { static: false }) signUpForm!: ElementRef;
   @ViewChild('userBtn', { static: false }) userBtn!: ElementRef;
   @ViewChild('adminBtn', { static: false }) adminBtn!: ElementRef;
-  confirmPassword: string = "";
+  confirmPassword: string | undefined = undefined;
 
 
   constructor(private authService: ApiAuthService,
@@ -117,6 +117,7 @@ export class SigninComponent {
       timer: 1000,
       title: err.error
     })
+    this.user.password = undefined;
   }
 
   handleAdminUpdateResponse(res: any) {
@@ -178,6 +179,8 @@ export class SigninComponent {
       timer: 2000,
       title: err.error
     })
+    this.user.password = undefined;
+    this.confirmPassword = undefined;
   }
 
   signInAsAdmin(admin: User) {

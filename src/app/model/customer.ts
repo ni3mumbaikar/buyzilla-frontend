@@ -4,5 +4,7 @@ export interface Customer {
     customerName: string,
     address: string,
     city: string,
-    country: string
+    country: string,
+    email: string
+    password?: string,
 }

@@ -1,10 +1,13 @@
-import { Component, ElementRef, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CartService } from 'src/app/core/services/cart.service';
 import { OrderVo, OrderDetailsVo } from 'src/app/model/order';
 import { Product } from 'src/app/model/product';
 import { defaultMixin } from 'src/app/config/default-mixin';
 import { ApiShippersService } from 'src/app/core/services/api-shippers.service';
 import { ApiOrdersService } from 'src/app/core/services/api-orders.service';
+import * as moment from 'moment';
+import { UserService } from 'src/app/core/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -20,8 +23,13 @@ export class CartComponent {
   cartModalElement!: HTMLElement;
   formElement!: HTMLFormElement;
   cartTotal: number = 0;
+  date = moment().format('MMMM Do YYYY')
 
-  constructor(private cartService: CartService, private shipperService: ApiShippersService, private orderService: ApiOrdersService) {
+  constructor(private cartService: CartService,
+    private userService: UserService,
+    private shipperService: ApiShippersService,
+    private router: Router,
+    private orderService: ApiOrdersService) {
     this.cartProductList = cartService.cartProducts;
     this.generateOrderDetails();
     this.setTotal();
@@ -48,13 +56,17 @@ export class CartComponent {
     this.formElement.onsubmit = async () => {
       const data = new FormData(this.formElement);
       let cid: number = Number(data.get('customerID'));
-      let order: OrderVo = {
-        customerID: cid,
-        date: new Date().toISOString().split('T')[0],
-        shipperID: await this.shipperService.getShipperID(),
-        orderDetailVos: this.cartOrderDetails
+      if (this.userService.currentUser && this.userService.currentUser.userid) {
+        let order: OrderVo = {
+          customerID: this.userService.currentUser.userid,
+          date: new Date().toISOString().split('T')[0],
+          shipperID: await this.shipperService.getShipperID(),
+          orderDetailVos: this.cartOrderDetails
+        }
+        this.placeOrder(order)
+      } else {
+        this.router.navigate(['/signin'])
       }
-      this.placeOrder(order)
 
       return false; // prevent reload
     }
@@ -70,7 +82,7 @@ export class CartComponent {
         })
 
         this.cartService.clearCart();
-
+        this.router.navigate(['/'])
       }
     })
   }
@@ -117,3 +129,4 @@ export class CartComponent {
   }
 
 }
+

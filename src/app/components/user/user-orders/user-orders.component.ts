@@ -3,6 +3,7 @@ import { ApiCustomersService } from 'src/app/core/services/api-customers.service
 import { ApiOrdersService } from 'src/app/core/services/api-orders.service';
 import { ProductApiHttpService } from 'src/app/core/services/api-product.service';
 import { ApiShippersService } from 'src/app/core/services/api-shippers.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { Order, OrderDetails } from 'src/app/model/order';
 
 @Component({
@@ -11,7 +12,7 @@ import { Order, OrderDetails } from 'src/app/model/order';
   styleUrls: ['./user-orders.component.css']
 })
 export class UserOrdersComponent {
-  
+
   getPrice(arg: OrderDetails[]) {
     return arg.map(o => o.product.price).reduce((prev, cur) => prev! + cur!)
   }
@@ -20,11 +21,14 @@ export class UserOrdersComponent {
   constructor(private orderService: ApiOrdersService,
     private shipperService: ApiShippersService,
     private customerService: ApiCustomersService,
+    private userService: UserService,
     private productService: ProductApiHttpService) {
-    orderService.getByCustomerID(42537).subscribe(res => {
-      console.log(res);
-      this.orders = res
-    });
+    if (userService.currentUser && userService.currentUser.userid) {
+      orderService.getByCustomerID(userService.currentUser.userid).subscribe(res => {
+        console.log(res);
+        this.orders = res
+      });
+    }
   }
 
 }

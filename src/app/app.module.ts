@@ -14,6 +14,7 @@ import { AdminComponent } from './components/admin/admin/admin.component';
 import { UserComponent } from './components/user/user/user.component';
 import { ProductsComponent } from './components/admin/products/products.component';
 import { UserOrdersComponent } from './components/user/user-orders/user-orders.component';
+import { SigninComponent } from './components/user/signin/signin.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UserOrdersComponent } from './components/user/user-orders/user-orders.c
     AdminComponent,
     UserComponent,
     ProductsComponent,
-    UserOrdersComponent
+    UserOrdersComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,

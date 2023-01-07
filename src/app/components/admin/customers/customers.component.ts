@@ -27,6 +27,7 @@ export class CustomersComponent {
       country: "",
       customerID: 0,
       customerName: "",
+      email: "",
       postalCode: undefined
     }
   }
@@ -42,6 +43,7 @@ export class CustomersComponent {
       country: "",
       customerID: 0,
       customerName: "",
+      email: "",
       postalCode: undefined
     }
     this.openmodal(false);

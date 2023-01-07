@@ -1,0 +1,160 @@
+<!-- TODO: SIGN INTO YOUR ACCOUNT / SIGN UP TEXT LABEL CHANGE -->
+<div *ngIf="!signup; else signupdiv " class="flex py-12 items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md space-y-8">
+        <div>
+            <img class="mx-auto h-24 w-auto" src="../../../../assets/images/favicon.png" alt="Your Company">
+            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+        </div>
+        <form class="mt-8 space-y-6" #signInForm action="#" method="POST">
+            <input type="hidden" name="remember" value="true">
+            <div class="-space-y-px rounded-md shadow-sm">
+                <div>
+                    <label for="email-address" class="sr-only">Email address</label>
+                    <input id="email-address" name="email" type="email" autocomplete="email" required
+                        [(ngModel)]="user.email"
+                        class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        placeholder="Email address">
+                </div>
+                <div>
+                    <label for="password" class="sr-only">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required
+                        [(ngModel)]="user.password"
+                        class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        placeholder="Password">
+                </div>
+            </div>
+
+            <div class="flex flex-row form-check justify-center">
+                <div>
+                    <input #userBtn class=" form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white
+                checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top
+                bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault2" checked>
+                    <label class="form-check-label inline-block text-gray-800" for="flexRadioDefault2">
+                        User
+                    </label>
+                </div>
+                <div class="form-check ml-2">
+                    <input #adminBtn
+                        class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                        type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label inline-block text-gray-800" for="flexRadioDefault1">
+                        Admin
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input id="remember-me" name="remember-me" type="checkbox"
+                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+                </div>
+
+                <div class="text-sm">
+                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                    class=" group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    Sign in
+                </button>
+            </div>
+        </form>
+
+        <div class="flex flex-row justify-center">
+            <div class="text-gray-500">Don't have an
+                account ?</div>
+            <div (click)="setsignup(true)" class="ml-1 text-indigo-600 cursor-pointer">Sign up</div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #signupdiv>
+    <div class="flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md space-y-8">
+            <div>
+                <img class="mx-auto h-24 w-auto" src="../../../../assets/images/favicon.png" alt="Your Company">
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account
+                </h2>
+            </div>
+            <form #signUpForm class="mt-8 space-y-6" action="#" method="POST">
+                <input type="hidden" name="remember" value="true">
+                <div class="-space-y-px rounded-md shadow-sm">
+                    <div>
+                        <label for="name" class="sr-only">Name</label>
+                        <input id="name" name="name" type="text" autocomplete="name" [(ngModel)]="user.customerName"
+                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Name">
+                    </div>
+                    <div>
+                        <label for="email-address" class="sr-only">Email address</label>
+                        <input id="email-address" name="email" type="email" autocomplete="email" required
+                            [(ngModel)]="user.email"
+                            class="relative block w-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Email address">
+                    </div>
+                    <div>
+                        <label for="address" class="sr-only">Address</label>
+                        <input id="address" name="address" type="text" autocomplete="address-line1" required
+                            [(ngModel)]="user.address"
+                            class="relative block w-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Address">
+                    </div>
+                    <div>
+                        <label for="postal-code" class="sr-only">Postal code</label>
+                        <input id="postal-code" name="postal-code" type="number" autocomplete="postal-code" required
+                            [(ngModel)]="user.postalCode"
+                            class="relative block w-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Postal code">
+                    </div>
+                    <div>
+                        <label for="city" class="sr-only">City</label>
+                        <input id="city" name="city" type="text" autocomplete="postal-code" required
+                            [(ngModel)]="user.city"
+                            class="relative block w-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="City">
+                    </div>
+                    <div>
+                        <label for="country" class="sr-only">Country</label>
+                        <input id="postal-code" name="postal-code" type="text" autocomplete="country-name" required
+                            [(ngModel)]="user.country"
+                            class="relative block w-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Country">
+                    </div>
+                    <div>
+                        <label for="password" class="sr-only">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                            [(ngModel)]="user.password"
+                            class="relative block w-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Password">
+                    </div>
+                    <div>
+                        <label for="password" class="sr-only">Confirm password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                            [(ngModel)]="confirmPassword"
+                            class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Confirm password">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Register
+                    </button>
+                </div>
+            </form>
+
+
+            <div class="top8 flex flex-row justify-center">
+                <div class="text-gray-500">Already have an
+                    account ?</div>
+                <div class="ml-1 text-indigo-600 cursor-pointer" (click)="setsignup(false)">Sign in</div>
+            </div>
+        </div>
+    </div>
+</ng-template>

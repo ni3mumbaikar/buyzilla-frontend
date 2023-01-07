@@ -21,7 +21,9 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "flowbite": "^1.5.5",
+    "moment": "^2.29.4",
     "rxjs": "~7.5.0",
+    "sh.js": "^1.1.1",
     "sweetalert2": "^11.6.16",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

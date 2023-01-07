@@ -1,19 +1,19 @@
-<div class="bg-gray-50">
+<div class="h-full">
     <!-- <div class=" mx-auto max-w-2xl py-8 px-4 sm:py-8 lg:py-8 sm:px-6 lg:max-w-7xl lg:px-8"> -->
     <div *ngIf="cartProductList.length==0; else realCart" class="text-center justify-center items-center">
         <img src=" ../../../assets/images/empty_cart.svg" class="max-h-72 mt-20 mb-16 ml-auto mr-auto" />
         <span class="text-gray-700 text-2xl font-semibold mb-2">Your cart is empty</span>
         <br />
-        <span class="text-gray-500 text-sm font-normal">Looks Like you have not added anything in your cart
+        <span class="text-gray-500 text-sm font-normal">Looks like you haven't added anything to your cart
             yet</span>
         <br />
         <button routerLink="/products"
             class="w-64 mt-8 p-2 text-thin font-normal text-white rounded-md text-center bg-blue-600 hover:bg-blue-700">Continue
             shopping</button>
     </div>
-    <ng-template #realCart>
-        <div>
-            <div class=" grid grid-cols-5 bg-white">
+    <ng-template #realCart class="bg-white">
+        <div class="bg-white">
+            <div class=" grid grid-cols-5">
                 <div class="item1 pt-8 pl-8 pr-8 col-span-5 sm:col-span-5 md:col-span-3 lg:col-span-3">
                     <hr />
                     <div *ngFor="let product of cartProductList"
@@ -31,7 +31,7 @@
                 </div>
                 <div
                     class="h-min item2 pl-8 pr-8 bg-gray-50 rounded-lg col-span-5 m-8 sm:col-span-5 md:col-span-2 lg:col-span-2">
-                    <div class="pt-8 pb-8 ">
+                    <div class=" pt-8 pb-8 ">
                         <div class="text-2xl text-gray-800 font-semibold">
                             Order Summary
                         </div>
@@ -83,18 +83,19 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div class="px-6 py-6 lg:px-8">
-                        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Customer Details
+                        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Order Details
                         </h3>
-                        <div class="block mb-2 text-medium font-thin text-gray-500 dark:text-white">User is
-                            not logged in <br /> Random shipper id will be assigned from database </div>
+                        <div class="block mb-2 text-medium font-thin text-gray-500 dark:text-white">
+                            {{date}}
+                        </div>
                         <form #cartForm class="space-y-6" id="cartform">
-                            <div class="mt-4 mb-4">
+                            <div class="mt-4 ">
                                 <label for="cid"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Customer
-                                    ID</label>
-                                <input type="number" name="customerID" id="customerID" [(ngModel)]="cid!"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    placeholder="••••••" required>
+                                    class="block mb-2 text-medium font-thin text-gray-500 dark:text-white">Grand
+                                    Total</label>
+                                <h4>
+                                    ₹{{cartTotal}}
+                                </h4>
                             </div>
                             <button type="submit" #submitbtnmodal
                                 class="submitbtn-modal w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

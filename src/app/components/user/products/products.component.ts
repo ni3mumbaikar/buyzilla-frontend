@@ -20,13 +20,9 @@ export class ProductsComponentComponent {
   title = 'buyzilla';
   products: [Product] | undefined;
   ps: ProductApiHttpService;
-  user: User | null = null
-  guestRoutes:any = [
-    {label:'Sign In'}
-  ]
 
 
-  constructor(productservice: ProductApiHttpService, private cartService: CartService, private userService: UserService) {
+  constructor(productservice: ProductApiHttpService, private cartService: CartService) {
 
     this.cartService = cartService;
     this.ps = productservice;
@@ -35,12 +31,6 @@ export class ProductsComponentComponent {
       console.log(data);
       this.products = data
     });
-
-    userService.userChangeSubject.subscribe(user=> {
-      if(user===null){
-        
-      }
-    })
 
   }
 

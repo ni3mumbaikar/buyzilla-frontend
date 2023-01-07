@@ -1,5 +1,6 @@
 import { Component, ComponentRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/core/services/user.service';
 import { ProductsComponent } from '../products/products.component';
 
 @Component({
@@ -10,7 +11,7 @@ import { ProductsComponent } from '../products/products.component';
 export class AdminComponent {
   activeTab: any = ProductsComponent;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private userService: UserService) {
 
   }
 
@@ -22,6 +23,10 @@ export class AdminComponent {
           this.activeTab = v['component']
         }
       });
+  }
+
+  signout() {
+    this.userService.signOut();
   }
 
 

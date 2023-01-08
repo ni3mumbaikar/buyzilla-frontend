@@ -14,7 +14,7 @@ import { arrayBuffer } from 'stream/consumers';
 export class OrdersComponent {
 
   getPrice(arg: OrderDetails[]) {
-    return arg.map(o => o.product.price).reduce((prev, cur) => prev! + cur!)
+    return arg.map(o => (o.product.price! * o.quantity)).reduce((prev, cur) => prev! + cur!)
   }
   orders: Order[] = [];
 

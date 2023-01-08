@@ -36,7 +36,6 @@ export class CartComponent {
     console.log('cart:', this.cartProductList);
     this.cartService.cartModifiedSubject.subscribe(cart => {
       this.cartProductList = cart;
-      this.generateOrderDetails();
       this.setTotal();
     })
   }
@@ -54,8 +53,8 @@ export class CartComponent {
 
   setUpOnOrder() {
     this.formElement.onsubmit = async () => {
-      const data = new FormData(this.formElement);
-      let cid: number = Number(data.get('customerID'));
+      // const data = new FormData(this.formElement);
+      // let cid: number = Number(data.get('customerID'));
       if (this.userService.currentUser && this.userService.currentUser.userid) {
         let order: OrderVo = {
           customerID: this.userService.currentUser.userid,
@@ -73,18 +72,32 @@ export class CartComponent {
   }
 
   placeOrder(order: OrderVo) {
-    this.orderService.post(order).subscribe(result => {
-      if (result['ok']) {
-
-        defaultMixin.fire({
-          icon: 'success',
-          title: 'Order placed'
-        })
-
-        this.cartService.clearCart();
-        this.router.navigate(['/'])
-      }
+    this.orderService.post(order).subscribe({
+      next: this.postOrder.bind(this),
+      error: this.handleError.bind(this)
     })
+  }
+
+  handleError(err: any) {
+    defaultMixin.fire({
+      icon: 'error',
+      timerProgressBar: true,
+      timer: 2000,
+      title: err.error
+    });
+  }
+
+  postOrder(data: any) {
+    if (data['ok']) {
+
+      defaultMixin.fire({
+        icon: 'success',
+        title: 'Order placed'
+      })
+
+      this.cartService.clearCart();
+      this.router.navigate(['/'])
+    }
   }
 
   getShipperID() {
@@ -108,11 +121,31 @@ export class CartComponent {
   setTotal() {
     this.cartTotal = 0;
     this.cartProductList.forEach(element => {
-      this.cartTotal += element.price!;
+      this.cartTotal += element.price! * this.getQuantity(element.productID);
     });
   }
 
-  getQuantity(id: number | undefined) {
+  increaseCount(id: number | undefined) {
+    if (this.cartOrderDetails) {
+      this.cartOrderDetails!.filter(p => p.productID === id).at(0)!.quantity = this.cartOrderDetails!.filter(p => p.productID === id).at(0)!.quantity + 1;
+      this.cartService.cartModifiedSubject.next(this.cartProductList);
+    }
+  }
+
+  decreaseCount(id: number | undefined) {
+    if (this.cartOrderDetails) {
+      if (this.cartOrderDetails!.filter(p => p.productID === id).at(0)!.quantity != 1) {
+        this.cartOrderDetails!.filter(p => p.productID === id).at(0)!.quantity = this.cartOrderDetails!.filter(p => p.productID === id).at(0)!.quantity - 1;
+        this.cartService.cartModifiedSubject.next(this.cartProductList);
+      }
+    }
+  }
+
+  getPrice(id: number | undefined): number {
+    return this.cartOrderDetails?.filter(p => p.productID === id)[0].quantity * this.cartProductList!.filter(p => p.productID === id)[0].price!;
+  }
+
+  getQuantity(id: number | undefined): number {
     return this.cartOrderDetails?.filter(p => p.productID === id)[0].quantity
   }
 

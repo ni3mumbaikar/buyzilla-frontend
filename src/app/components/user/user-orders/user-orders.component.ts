@@ -14,7 +14,7 @@ import { Order, OrderDetails } from 'src/app/model/order';
 export class UserOrdersComponent {
 
   getPrice(arg: OrderDetails[]) {
-    return arg.map(o => o.product.price).reduce((prev, cur) => prev! + cur!)
+    return arg.map(o => (o.product.price! * o.quantity)).reduce((prev, cur) => prev! + cur!)
   }
   orders: Order[] = [];
 

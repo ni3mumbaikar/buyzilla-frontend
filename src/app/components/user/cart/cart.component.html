@@ -19,10 +19,25 @@
                     <div *ngFor="let product of cartProductList"
                         class="gap-x-8 md:gap-x-16 lg:gap-x-16 flex flex-row m-8 h-30">
                         <img class="w-20 h-20 rounded-lg" src={{product.productImage}} />
-                        <div class="">
+                        <div>
                             <div class="text-gray-800">{{product.productName}}</div>
+                            <div class="mt-1 flex flex-row align-middle text-gray-800">
+                                <div class="rounded-full bg-gray-50" (click)="decreaseCount(product.productID)">
+                                    <svg class="h-6 w-6 fill-gray-500 p-1" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 50 50">
+                                        <path d="M10 25.5v-3h28v3Z" />
+                                    </svg>
+                                </div>
+                                <div class="ml-2 mr-2">{{getQuantity(product.productID)}}</div>
+                                <div class="rounded-full bg-gray-50" (click)="increaseCount(product.productID)">
+                                    <svg class="h-6 w-6 p-1 fill-gray-500" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 50 50">
+                                        <path d="M22.5 38V25.5H10v-3h12.5V10h3v12.5H38v3H25.5V38Z" />
+                                    </svg>
+                                </div>
+                            </div>
                             <!-- <div>{{getQuantity(product.productID)}}</div> -->
-                            <div class="mt-1 text-gray-800">₹{{product.price}}</div>
+                            <div class="mt-1 text-gray-800">₹{{getPrice(product.productID)}}</div>
                         </div>
                         <img class="ml-auto fill-gray-100 h-4 w-4 cursor-pointer" (click)="removeFromCart(product)"
                             src="../../../assets/images/remove.svg" />

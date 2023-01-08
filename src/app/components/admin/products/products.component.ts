@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { CartService } from 'src/app/core/services/cart.service';
 import { defaultMixin } from 'src/app/config/default-mixin';
 import { FormsModule } from '@angular/forms';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-products',
@@ -48,11 +49,25 @@ export class ProductsComponent {
     };
     this.reloadProdutcs();
 
-    productservice.get().subscribe(data => {
-      console.log(data);
-      this.products = data
+    productservice.get().subscribe({
+      next: this.setProducts.bind(this),
+      error: this.handleError.bind({
+        error: 'Unable to fetch products '
+      })
     });
 
+  }
+
+  handleError(err: any) {
+    defaultMixin.fire({
+      icon: 'error',
+      text: err.error,
+      timer: 2000
+    })
+  }
+
+  setProducts(data: [Product]) {
+    this.products = data
   }
 
   ngAfterViewInit() {
@@ -141,17 +156,20 @@ export class ProductsComponent {
 
   // Setup project subject subscriber to change local list automatically
   reloadProdutcs() {
-    this.ps.product_subject.subscribe(list => {
-      this.products = list
-      this.ps.products = list;
-
+    this.ps.product_subject.subscribe({
+      next: this.setProducts.bind(this),
+      error: this.handleError.bind({
+        error: 'Unable to fetch products '
+      })
     });
   }
 
   reloadlist() {
-    this.ps.get().subscribe(list => {
-      this.products = list;
-      this.ps.products = list;
+    this.ps.get().subscribe({
+      next: this.setProducts.bind(this),
+      error: this.handleError.bind({
+        error: 'Unable to fetch products '
+      })
     })
   }
 

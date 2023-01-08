@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { error } from 'console';
 import { defaultMixin } from 'src/app/config/default-mixin';
 import { ApiCustomersService } from 'src/app/core/services/api-customers.service';
 import { Customer } from 'src/app/model/customer';
@@ -32,6 +33,15 @@ export class CustomersComponent {
     }
   }
 
+  handleError(err: any) {
+    defaultMixin.fire({
+      icon: 'error',
+      timerProgressBar: true,
+      timer: 1000,
+      title: err.error
+    })
+  }
+
   loadCustomers() {
     this.customerService.get().subscribe(customers => this.customers = customers);
   }
@@ -60,22 +70,47 @@ export class CustomersComponent {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.customerService.delete(customer.customerID!).subscribe(res => {
-          if (res['ok']) {
-            defaultMixin.fire({
-              icon: 'success',
-              title: 'Shipper ' + customer.customerName + ' removed.'
-            })
-            this.loadCustomers();
-          }
+        this.customerService.delete(customer.customerID!).subscribe({
+          next: this.deleteCustomerResult.bind(this, customer),
+          error: this.handleError.bind(this)
         })
       }
     })
   }
 
+  deleteCustomerResult(res: any, customer: any) {
+    if (res['ok']) {
+      defaultMixin.fire({
+        icon: 'success',
+        title: 'Shipper ' + customer.customerName + ' removed.'
+      })
+      this.loadCustomers();
+    }
+  }
+
   editCustomer(customer: Customer) {
     this.tempCustomer = customer
     this.openmodal(true);
+  }
+
+  addNewCustomerResult(res: any) {
+    if (res['ok']) {
+      defaultMixin.fire({
+        icon: 'success',
+        text: 'User is registered'
+      })
+      this.closemodal();
+    }
+  }
+
+  updateCustomerResult(res: any) {
+    if (res['ok']) {
+      defaultMixin.fire({
+        icon: 'success',
+        text: 'User is updated'
+      })
+    }
+    this.closemodal();
   }
 
   openmodal(edit: boolean) {
@@ -84,24 +119,14 @@ export class CustomersComponent {
     this.customerService.get().subscribe(customers => this.customers = customers);
     this.formElement.onsubmit = () => {
       if (!edit) {
-        this.customerService.post(this.tempCustomer).subscribe(res => {
-          if (res['ok']) {
-            defaultMixin.fire({
-              icon: 'success',
-              text: 'User is registered'
-            })
-            this.closemodal();
-          }
+        this.customerService.post(this.tempCustomer).subscribe({
+          next: this.addNewCustomerResult.bind(this),
+          error: this.handleError.bind(this)
         });
       } else {
-        this.customerService.put(this.tempCustomer).subscribe(res => {
-          if (res['ok']) {
-            defaultMixin.fire({
-              icon: 'success',
-              text: 'User is updated'
-            })
-          }
-          this.closemodal();
+        this.customerService.put(this.tempCustomer).subscribe({
+          next: this.updateCustomerResult.bind(this),
+          error: this.handleError.bind(this)
         });
       }
     }

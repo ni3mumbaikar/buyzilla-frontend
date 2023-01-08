@@ -15,6 +15,7 @@ export class UserComponent {
   len: number = 0;
   public activeTab = ProductsComponentComponent;
   user: User | null = null
+  name?: String = "";
 
   constructor(private route: ActivatedRoute, private router: Router, private cartService: CartService, private userService: UserService) {
     this.setCartSubscriber();
@@ -24,6 +25,7 @@ export class UserComponent {
       this.changeMenu();
     })
     this.user = userService.currentUser;
+    this.name = this.user?.userName
     this.changeMenu();
 
 

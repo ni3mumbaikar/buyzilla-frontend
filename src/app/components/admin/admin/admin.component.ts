@@ -17,22 +17,22 @@ export class AdminComponent {
 
   }
 
-  profileClick() {
-    if (this.dropdown.nativeElement as HTMLElement) {
-      if ((this.dropdown.nativeElement as HTMLElement).style.display != 'block') {
-        (this.dropdown.nativeElement as HTMLElement).setAttribute('data-popper-placement', 'bottom');
+  // profileClick() {
+  //   if (this.dropdown.nativeElement as HTMLElement) {
+  //     if ((this.dropdown.nativeElement as HTMLElement).style.display != 'block') {
+  //       (this.dropdown.nativeElement as HTMLElement).setAttribute('data-popper-placement', 'bottom');
 
-        (this.dropdown.nativeElement as HTMLElement).style.display = 'block';
-        // (this.dropdown.nativeElement as HTMLElement).style.position = 'absolute';
-      } else {
-        (this.dropdown.nativeElement as HTMLElement).style.display = 'none';
-      }
-      console.log(String(this.innerWidth - 198.8));
+  //       (this.dropdown.nativeElement as HTMLElement).style.display = 'block';
+  //       // (this.dropdown.nativeElement as HTMLElement).style.position = 'absolute';
+  //     } else {
+  //       (this.dropdown.nativeElement as HTMLElement).style.display = 'none';
+  //     }
+  //     console.log(String(this.innerWidth - 198.8));
 
-      // (this.dropdown.nativeElement as HTMLElement).style.transform = 'translate3d(' + String(this.innerWidth - 198.8) + 'px, 68px, 0px)';
-      // (this.dropdown.nativeElement as HTMLElement).style.inset = '0px auto auto 0px';
-    }
-  }
+  //     // (this.dropdown.nativeElement as HTMLElement).style.transform = 'translate3d(' + String(this.innerWidth - 198.8) + 'px, 68px, 0px)';
+  //     // (this.dropdown.nativeElement as HTMLElement).style.inset = '0px auto auto 0px';
+  //   }
+  // }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
